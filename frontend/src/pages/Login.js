@@ -1,15 +1,32 @@
 import React from 'react';
 
 const Login = () => {
-  const handleSubmit = (event) => {
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
+  
     console.log('Login submitted:');
     console.log('Username:', username);
     console.log('Password:', password);
-    // perform login action with username and password
-  };
+  
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  
+    if (!response.ok) {
+      throw new Error('API Failed');
+    }
+  
+    localStorage.setItem('username', username);
+    console.log('Login successful');
+    // Redirect to the home page
+    window.location.href = '/';
+  }
+    
 
   return (
     <div>

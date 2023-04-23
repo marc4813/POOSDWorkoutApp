@@ -2,20 +2,39 @@ import React from 'react';
 
 const Register = () => {
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // perform registration action with name, username, password, and confirm password
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    const confirmPassword = event.target.confirmPassword.value;
+
+    if (password !== confirmPassword) {
+      throw new Error('Passwords do not match');
+    }
+
     console.log('Registration submitted:');
+    console.log('Username:', username);
+    console.log('Password:', password);
+
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error('API failed');
+    }
+
+    console.log('Registration successful');
+    // Redirect to the login page
+    window.location.href = '/login';
   };
 
   return (
     <div>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name"/>
-        </div>
         <div>
           <label htmlFor="username">Username:</label>
           <input type="text" id="username"/>
