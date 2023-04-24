@@ -5,11 +5,12 @@ const WorkoutForm = () => {
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
     const [error, setError] = useState(null)
+    const username = localStorage.getItem('username')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        const workout = {title, load, reps}
+        const workout = {username, title, load, reps}
 
         const response = await fetch('/api/workouts', {
             method: 'POST',
