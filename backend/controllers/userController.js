@@ -1,4 +1,4 @@
-const User = require('../models/user')
+const User = require('../models/usermodel')
 const mongoose = require('mongoose')
 
 
@@ -17,17 +17,19 @@ const getUser = async(req, res) => {
     }
 
     res.status(200).json(user)
-} 
+}
 
 // create a new user
 const createUser = async (req, res) => {
-    const {firstName, lastName, email} = req.body
-
-    // Add document to the db
+    const {username, password} = req.body
+    console.log('Attempting to create user')
+    // Add user to the db
     try {
-        const user =  await User.create({firstName, lastName})
+        const user =  await User.create({username, password})
+        console.log('Successfully created user')
         res.status(200).json(user)
     } catch(error) {
+        console.log(error.message)
         res.status(400).json({error: error.message})
     }
 
@@ -43,7 +45,7 @@ const deleteUser = async(req, res) => {
     const user = await Workout.findOneAndDelete({_id: id})
     
     if(!user){
-        return res.status(404).json({error: 'No user found})
+        return res.status(404).json({error: 'No user found'})
     }
 
     res.status(200).json(user)
