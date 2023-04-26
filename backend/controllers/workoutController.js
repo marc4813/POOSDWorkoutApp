@@ -7,28 +7,24 @@ const getWorkouts = async(req, res) => {
     res.status(200).json(workouts)
 }
 
-// get a single workout
-const getWorkout = async(req, res) => {
-    const { id } = req.params
-    
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such workout, dummy'})
-    }
+// Search workouts by title
+const getWorkoutsByTitle = async(req, res) => {
+    const { title } = req.body
 
-    const workout = await Workout.findById(id)
+    const workout = await Workout.find( { title : title } )
     
     if (!workout) {
         return res.status(404).json({error: 'No such workout, dummy'})
     }
 
     res.status(200).json(workout)
-} 
+}
 
 // create a new workout
 const createWorkout = async (req, res) => {
-    const {title, load, reps} = req.body
-
-    // Add document to the db
+    const { title, load, reps } = req.body
+    console.log(req.body)
+    // Add workout to the db
     try {
         const workout =  await Workout.create({title, load, reps})
         res.status(200).json(workout)
@@ -39,13 +35,14 @@ const createWorkout = async (req, res) => {
 }
 // delete a workout
 const deleteWorkout = async(req, res) => {
-    const {id} = req.params
-
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    console.log("here")
+    const { _id } = req.body
+    console.log("now here")
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).json({error: 'No such workout, dummy'})
     }
-
-    const workout = await Workout.findOneAndDelete({_id: id})
+    console.log("attempting to delete " + _id + " from database.")
+    const workout = await Workout.findOneAndDelete( { _id : _id } )
     
     if(!workout){
         return res.status(404).json({error: 'No such workout, dummy'})
@@ -56,18 +53,18 @@ const deleteWorkout = async(req, res) => {
 
 // update a workout 
 const updateWorkout = async(req, res) => {
-    const {id} = req.params
+    const { _id, title, reps, load } = req.body
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such workout, dummy'})
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).json({error: "ID " + _id + " is invalid."})
     }
 
-    const workout = await Workout.findOneAndUpdate({_id: id}, {
-        ...req.body
+    const workout = await Workout.findOneAndUpdate( { _id : _id }, {
+        title : title, reps : reps, load : load
     })
 
     if(!workout){
-        return res.status(404).json({error: 'No such workout, dummy'})
+        return res.status(404).json({error: 'Oopsie'})
     }
 
     res.status(200).json(workout)
@@ -76,8 +73,8 @@ const updateWorkout = async(req, res) => {
 
 module.exports = {
     createWorkout,
-    getWorkout,
     getWorkouts,
+    getWorkoutsByTitle,
     deleteWorkout,
     updateWorkout
 }
