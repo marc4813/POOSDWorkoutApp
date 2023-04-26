@@ -5,9 +5,8 @@ const mongoose = require('mongoose')
 // get a single user
 const getUser = async(req, res) => {
     // HTTP GET request gives username and password
-    const {username, password} = req.body
-    // Debug
-    console.log(username)
+    const username = req.query.username
+    const password = req.query.password
     // Retrieves a user with the given username and password, if present
     const user = await User.findOne( { username : username, password : password } )
     
@@ -21,7 +20,6 @@ const getUser = async(req, res) => {
 // create a new user
 const createUser = async (req, res) => {
     const {username, password} = req.body
-    console.log(username)
     // Add user to the db
     try {
         const user =  await User.create( { username : username, password : password } )
