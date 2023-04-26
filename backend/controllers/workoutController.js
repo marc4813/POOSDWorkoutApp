@@ -9,19 +9,28 @@ const getWorkouts = async( req, res ) => {
     // pull username from query
     const username = req.query.username
 
-    // pull workout title from query, if any
     const title = req.query.title
-
-    // if a title is given, pull workouts with title. Otherwise, pull all workouts for user
-    if (title) {
-        console.log("Searching for workouts called " + title + " for user " + username )
-        const workouts = await Workout.find( { title : title } ).sort( { createdAt: -1 } )
+    
+    if (title=="") {
+        // if a title is given, pull workouts with title. Otherwise, pull all workouts for user
+        await Workout.find( { username : username }, function(err, workouts)
+        {
+            if (err) {
+                return res.status(404).json( { error: 'No such workout, dummy' } )
+            } else {
+                return res.status(200).json( workouts )
+            }
+        })
     } else {
-        const workouts = await Workout.find( { username : username } ).sort( { createdAt: -1 } )
+        await Workout.find( { username : username, title : {$regex : title} }, function(err, workouts)
+        {
+            if (err) {
+                return res.status(404).json( { error: 'No such workout, dummy' } )
+            } else {
+                return res.status(200).json( workouts )
+            }
+        })
     }
-    console.log(workouts)
-    // respond with workouts list
-    res.status(200).json( workouts )
 }
 
 // Creates a new workout with the given specifications
