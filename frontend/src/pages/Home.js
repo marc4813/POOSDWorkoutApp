@@ -1,33 +1,45 @@
-import { useEffect, useState } from "react"
-
-// components 
-import WorkoutDetails from '../components/WorkoutDetails.js'
-import WorkoutForm from '../components/WorkoutForm.js'
+import { useEffect, useState } from "react";
+import WorkoutDetails from "../components/WorkoutDetails.js";
+import WorkoutForm from "../components/WorkoutForm.js";
 
 const Home = () => {
-    const [workouts, setWorkouts] = useState(null)
+    const [workouts, setWorkouts] = useState(null);
+        
+    //localStorage.setItem('username', "Arwin");
+    const isLoggedIn = localStorage.getItem("username") ? true : false;
+
     useEffect(() => {
         const fetchWorkouts = async () => {
-          const response = await fetch('/api/workouts')
-          const json = await response.json()
+        const response = await fetch("/api/workouts");
+        const json = await response.json();
 
-          if(response.ok){
-            setWorkouts(json)
-          }
-      }
+        if (response.ok) {
+            setWorkouts(json);
+        }
+        };
 
-      fetchWorkouts()
-    }, [])
+        fetchWorkouts();
+    }, []);
+
     return (
-        <div className="home">
-            <div className = "workouts">
-                {workouts && workouts.map((workout) => (
-                    <WorkoutDetails key = {workout._id} workout={workout}/>
+        <>
+        {isLoggedIn ? (
+            <div className="home">
+            <div className="workouts">
+                {workouts &&
+                workouts.map((workout) => (
+                    <WorkoutDetails key={workout._id} workout={workout} />
                 ))}
             </div>
-            <WorkoutForm/>
-        </div>
-    )
-}
+            <WorkoutForm />
+            </div>
+        ) : (
+            <div className="login-warning">
+            <p>Please log in first to view this page</p>
+            </div>
+        )}
+        </>
+    );
+};
 
-export default Home
+export default Home;
