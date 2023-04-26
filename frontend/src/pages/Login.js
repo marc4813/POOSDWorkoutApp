@@ -11,9 +11,8 @@ const Login = () => {
     console.log('Username:', username);
     console.log('Password:', password);
   
-    const response = await fetch('/api/login', {
+    const response = await fetch(`/api/users?username=${username}&password=${password}`, {
       method: 'GET',
-      body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
     });
   

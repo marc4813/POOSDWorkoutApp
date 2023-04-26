@@ -27,8 +27,8 @@ const Register = () => {
     }
 
     console.log('Registration successful');
-    // Redirect to the login page
-    window.location.href = '/login';
+    // Redirect to the home page
+    window.location.href = '/';
   };
 
   return (
