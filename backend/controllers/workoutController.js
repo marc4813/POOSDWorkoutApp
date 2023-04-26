@@ -9,7 +9,7 @@ const getWorkouts = async(req, res) => {
 
 // Search workouts by title
 const getWorkoutsByTitle = async(req, res) => {
-    const { title } = req.body
+    const { title } = req.query.title
 
     const workout = await Workout.find( { title : title } )
     
