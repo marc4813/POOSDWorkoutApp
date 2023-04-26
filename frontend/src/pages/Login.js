@@ -12,7 +12,7 @@ const Login = () => {
     console.log('Password:', password);
   
     const response = await fetch('/api/login', {
-      method: 'POST',
+      method: 'GET',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
     });
