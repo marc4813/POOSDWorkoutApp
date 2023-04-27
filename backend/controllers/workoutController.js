@@ -1,72 +1,124 @@
-const Workout = require('../models/workoutmodel')
-const mongoose = require('mongoose')
-// get all workouts
-const getWorkouts = async(req, res) => {
-    const workouts = await Workout.find({}).sort({createdAt: -1})
+// includes
+const Workout = require( '../models/workoutmodel' )
+const mongoose = require( 'mongoose' )
 
-    res.status(200).json(workouts)
-}
+// Gets all workouts for current user. If a title is given, only gets workouts with given title.
+// HTTP GET /api/workouts?username=[username]&title=[title]
+const getWorkouts = async( req, res ) => {
 
-// Search workouts by title
-const getWorkoutsByTitle = async(req, res) => {
-    const { title } = req.query.title
+    // pull username from query
+    const username = req.query.username
 
-    const workout = await Workout.find( { title : title } )
+    const title = req.query.title
     
-    if (!workout) {
-        return res.status(404).json({error: 'No such workout, dummy'})
+    if (title=="") {
+        // if a title is given, pull workouts with title. Otherwise, pull all workouts for user
+        await Workout.find( { username : username }, function(err, workouts)
+        {
+            if (err) {
+                return res.status(404).json( { error: 'No such workout, dummy' } )
+            } else {
+                return res.status(200).json( workouts )
+            }
+        })
+    } else {
+        await Workout.find( { username : username, title : {$regex : title} }, function(err, workouts)
+        {
+            if (err) {
+                return res.status(404).json( { error: 'No such workout, dummy' } )
+            } else {
+                return res.status(200).json( workouts )
+            }
+        })
     }
-
-    res.status(200).json(workout)
 }
 
-// create a new workout
-const createWorkout = async (req, res) => {
-    const { title, load, reps } = req.body
-    console.log(req.body)
+// Creates a new workout with the given specifications
+// HTTP POST /api/workouts
+// JSON FORMAT:
+//    {
+//      "username" : [username],
+//      "title" : [title],
+//      "load" : [load],
+//      "reps" : [reps]
+//    }
+const createWorkout = async ( req, res ) => {
+    
+    // pull json data from request
+    const { username, title, load, reps } = req.body
+    console.log(username)
     // Add workout to the db
-    try {
-        const workout =  await Workout.create({title, load, reps})
-        res.status(200).json(workout)
-    } catch(error) {
-        res.status(400).json({error: error.message})
-    }
-
+    const workout =  await Workout.create( {
+        username : username,
+        title : title,
+        load : load,
+        reps : reps
+    } )
+    console.log("successfully created")
+    // respond with new workout
+    res.status(200).json( workout )
 }
-// delete a workout
+
+// Creates a new workout with the given specifications
+// HTTP POST /api/workouts
+// JSON FORMAT:
+//    {
+//      "_id" : [username]
+//    }
 const deleteWorkout = async(req, res) => {
-    console.log("here")
+
+    // pull json data from request
     const { _id } = req.body
-    console.log("now here")
+
+    // ensure id is a valid id token before sending to mongod
     if(!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).json({error: 'No such workout, dummy'})
     }
-    console.log("attempting to delete " + _id + " from database.")
+    
+    // remove workout from db
     const workout = await Workout.findOneAndDelete( { _id : _id } )
     
+    // respond with 404 if no workouts found
     if(!workout){
-        return res.status(404).json({error: 'No such workout, dummy'})
+        return res.status(404).json( { error: 'No such workout, dummy' } )
     }
 
+    // respond with deleted workout
     res.status(200).json(workout)
 }
 
-// update a workout 
+// Creates a new workout with the given specifications
+// HTTP POST /api/workouts
+// JSON FORMAT:
+//    {
+//      "_id" : [id]
+//      "title" : [title],
+//      "load" : [load],
+//      "reps" : [reps]
+//    }
 const updateWorkout = async(req, res) => {
+
+    // pull json data from request
     const { _id, title, reps, load } = req.body
 
+    // ensure id is a valid id token before sending to mongod
     if(!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).json({error: "ID " + _id + " is invalid."})
     }
 
+    // update workout in db
     const workout = await Workout.findOneAndUpdate( { _id : _id }, {
-        title : title, reps : reps, load : load
+        title : title,
+        reps : reps,
+        load : load
     })
 
+    // respond with 404 if no workout found
     if(!workout){
         return res.status(404).json({error: 'Oopsie'})
     }
 
+    // respond with OLD WORKOUT, NOT UPDATED
     res.status(200).json(workout)
 
 }
@@ -74,7 +126,6 @@ const updateWorkout = async(req, res) => {
 module.exports = {
     createWorkout,
     getWorkouts,
-    getWorkoutsByTitle,
     deleteWorkout,
     updateWorkout
 }
