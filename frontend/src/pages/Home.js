@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UpdateContext } from "../context/updateContext.js";
 import WorkoutDetails from "../components/WorkoutDetails.js";
 import WorkoutForm from "../components/WorkoutForm.js";
 
 const Home = () => {
     const [workouts, setWorkouts] = useState(null);
-        
+    const newData = useContext(UpdateContext);
+    
     //localStorage.setItem('username', "Arwin");
     const isLoggedIn = localStorage.getItem("username") ? true : false;
 
@@ -19,7 +22,7 @@ const Home = () => {
         };
 
         fetchWorkouts();
-    }, []);
+    }, [newData]);
 
     return (
         <>
