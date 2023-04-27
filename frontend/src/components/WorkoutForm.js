@@ -32,6 +32,7 @@ const WorkoutForm = () => {
             setReps('')
             setError(null)
             console.log('new workout added (lets go!)')
+            window.location.reload();
         }
     }
 
