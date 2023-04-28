@@ -18,6 +18,10 @@ async function main() {
 const Schema = mongoose.Schema
 
 const workoutSchema = new Schema({
+    username : {
+        type: String,
+        required: true
+    },
     title : {
         type: String,
         required: true
