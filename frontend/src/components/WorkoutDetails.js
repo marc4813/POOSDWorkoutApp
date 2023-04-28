@@ -27,7 +27,7 @@ const WorkoutDetails = ({workout}) => {
         else
         {
             console.log("Delete Successful. Reloading Components...")
-            setVisible((prev) => !prev);
+            window.location.reload()
         }
     }
     
@@ -64,7 +64,7 @@ const WorkoutDetails = ({workout}) => {
         else
         {
             console.log("Update Successful. Reloading Components...")
-            setVisible((prev) => !prev);
+            window.location.reload()
         }
     }
 
@@ -72,12 +72,12 @@ const WorkoutDetails = ({workout}) => {
         
         <div className="workout-details">
             
-            {visible && (<h4>{workout.title}</h4>)}
-            {visible && (<p><strong>Load(kg): </strong>{workout.load}</p>)}
-            {visible && (<p><strong>Reps: </strong>{workout.reps}</p>)}
-            {visible && (<p>{workout.createdAt}</p>)}
-            {visible && (<button class="button delete" onClick={handleDelete}>Delete Workout</button>)}
-            {visible && (<Popup trigger= {<button>Edit Workout</button>} position="top center">
+            <h4>{workout.title}</h4>
+            <p><strong>Load(kg): </strong>{workout.load}</p>
+            <p><strong>Reps: </strong>{workout.reps}</p>
+            <p>{workout.createdAt}</p>
+            <button class="button delete" onClick={handleDelete}>Delete Workout</button>
+            <Popup trigger= {<button>Edit Workout</button>} position="top center">
                 <div>
                     <form className="update" onSubmit={handleUpdate}>
                         <h3>Update Workout</h3>
@@ -90,7 +90,7 @@ const WorkoutDetails = ({workout}) => {
                         <button type="submit">Update Workout</button>
                     </form>
                 </div>
-            </Popup>)}
+            </Popup>
         </div>
     )
 }
