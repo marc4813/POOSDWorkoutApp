@@ -1,6 +1,8 @@
 import { useState, } from "react"
 const WorkoutDetails = ({workout}) => {
 
+    const [visible, setVisible] = useState(true);
+
     const handleDelete = async (e) => {
         e.preventDefault()
         // Delete Workout
@@ -23,7 +25,7 @@ const WorkoutDetails = ({workout}) => {
         else
         {
             console.log("Delete Successful. Reloading Components...")
-            window.location.reload();
+            setVisible((prev) => !prev);
         }
     }
 
