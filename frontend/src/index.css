@@ -79,6 +79,7 @@ header a {
 
 .workout-details button.delete{
   background: var(--error);
+  margin-right: 10px
 }
 
 /* new workout form */
