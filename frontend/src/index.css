@@ -74,15 +74,11 @@ header a {
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
+  margin:auto
 }
-.workout-details form .button2{
+
+.workout-details button.delete{
   background: var(--error);
-  border: 0;
-  color: #fff;
-  padding: 10px;
-  font-family: "Poppins";
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 /* new workout form */
