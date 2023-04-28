@@ -89,8 +89,19 @@ input {
   border-radius: 4px;
   box-sizing: border-box;
 }
-form button {
+form buttonedit {
   background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  margin-left: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form buttondelete{
+  background: var(--error);
   border: 0;
   color: #fff;
   padding: 10px;
@@ -98,6 +109,7 @@ form button {
   border-radius: 4px;
   cursor: pointer;
 }
+
 div.error {
   padding: 10px;
   background: #ffefef;
