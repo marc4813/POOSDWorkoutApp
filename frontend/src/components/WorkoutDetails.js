@@ -34,14 +34,20 @@ const WorkoutDetails = ({workout}) => {
     const handleUpdate = async (e) => {
 
         console.log("we here")
+      
+        console.log(workout._id)
+        console.log(e.target.title.value)
+        console.log(e.target.load.value)
+        console.log(e.target.reps.value)
+        
         const response = await fetch('api/workouts', {
             method: 'PATCH',
-            body: {
+            body: JSON.stringify({
                 "_id" : workout._id,
-                "title" : e.target.title,
-                "load" : e.target.load,
-                "reps" : e.target.reps
-            },
+                "title" : e.target.title.value,
+                "load" : e.target.load.value,
+                "reps" : e.target.reps.value
+            }),
             headers: {
                 'Content-Type' : 'application/json'
             }
