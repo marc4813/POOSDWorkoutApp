@@ -17,7 +17,7 @@ const Navbar = () => {
             <div className="container">
                 <Link to ="/">
                     <h1>
-                        Workout Buddy
+                        Sweat Tracker
                     </h1>
                 </Link>
                 <div className="nav-links">
