@@ -30,12 +30,14 @@ const WorkoutDetails = ({workout}) => {
     }
 
     return (
+        
         <div className="workout-details">
-            <h4>{workout.title}</h4>
-            <p><strong>Load(kg): </strong>{workout.load}</p>
-            <p><strong>Reps: </strong>{workout.reps}</p>
-            <p>{workout.createdAt}</p>
-            <button onClick={handleDelete}>Delete Workout</button>
+            
+            {visible && (<h4>{workout.title}</h4>)}
+            {visible && (<p><strong>Load(kg): </strong>{workout.load}</p>)}
+            {visible && (<p><strong>Reps: </strong>{workout.reps}</p>)}
+            {visible && (<p>{workout.createdAt}</p>)}
+            {visible && (<button onClick={handleDelete}>Delete Workout</button>)}
         </div>
     )
 }
