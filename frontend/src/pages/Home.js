@@ -45,7 +45,7 @@ const Home = () => {
             </div>
             </div>
         ) : (
-            <div className="home">
+            <div className="landing">
                 <img className="profile-photo" src={require("../img/WorkoutStock.jpg")} alt={"Carlie Anglemire"}/>
                 <header>
                     <h1>Track your workouts</h1>
