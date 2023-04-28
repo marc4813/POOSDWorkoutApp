@@ -45,8 +45,12 @@ const Home = () => {
             </div>
             </div>
         ) : (
-            <div className="login-warning">
-            <p>Please log in first to view this page</p>
+            <div className="home">
+                <img className="profile-photo" src={require("../img/WorkoutStock.jpg")} alt={"Carlie Anglemire"}/>
+                <header>
+                    <h1>Track your workouts</h1>
+                    <p>Create an account to begin!</p>
+                </header>
             </div>
         )}
         </>

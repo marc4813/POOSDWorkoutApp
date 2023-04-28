@@ -36,6 +36,7 @@ header a {
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  text-align: center;
   gap: 100px;
 }
 .workout-details {
