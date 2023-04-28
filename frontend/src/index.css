@@ -75,6 +75,15 @@ header a {
   border-radius: 4px;
   cursor: pointer;
 }
+.workout-details form .button2{
+  background: var(--error);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 /* new workout form */
 label, input {
@@ -95,16 +104,6 @@ form button {
   color: #fff;
   padding: 10px;
   margin-left: 10px;
-  font-family: "Poppins";
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-form buttondelete{
-  background: var(--error);
-  border: 0;
-  color: #fff;
-  padding: 10px;
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
