@@ -75,7 +75,7 @@ header a {
   border-radius: 4px;
   cursor: pointer;
 }
-.workout-details form .button2{
+.workout-details button2{
   background: var(--error);
   border: 0;
   color: #fff;

@@ -76,7 +76,7 @@ const WorkoutDetails = ({workout}) => {
             {visible && (<p><strong>Load(kg): </strong>{workout.load}</p>)}
             {visible && (<p><strong>Reps: </strong>{workout.reps}</p>)}
             {visible && (<p>{workout.createdAt}</p>)}
-            {visible && (<button2 onClick={handleDelete}>Delete Workout</button2>)}
+            {visible && (<button class="button2" onClick={handleDelete}>Delete Workout</button>)}
             {visible && (<Popup trigger= {<button>Edit Workout</button>} position="top center">
                 <div>
                     <form className="update" onSubmit={handleUpdate}>
