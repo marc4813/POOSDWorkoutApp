@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import WorkoutDetails from "../components/WorkoutDetails.js";
 import WorkoutForm from "../components/WorkoutForm.js";
-import { useContext } from "react";
-import { UpdateContext } from "../context/updateContext.js";
 
 const Home = () => {
     const [workouts, setWorkouts] = useState(null);
-    const newData = useContext(UpdateContext);
     const [title, setTitle] = useState("");
     const isLoggedIn = localStorage.getItem("username") ? true : false;
     const username = localStorage.getItem('username');
@@ -23,7 +20,7 @@ const Home = () => {
         };
 
         fetchWorkouts();
-    }, [title, username, newData]);
+    }, [title, username]);
 
     const handleSearch = (event) => {
         setTitle(event.target.value);
