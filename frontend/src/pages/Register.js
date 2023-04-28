@@ -16,7 +16,7 @@ const Register = () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    const response = await fetch('/api/register', {
+    const response = await fetch('/api/users', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
